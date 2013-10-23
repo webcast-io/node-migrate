@@ -7,10 +7,12 @@ var migrate = require('../')
   , should = require('should')
   , fs = require('fs');
 
+var migrateFile = '.migrate' + (process.env.NODE_ENV) ? '.' + process.env.NODE_ENV : '';
+
 // remove migration file
 
 try {
-  fs.unlinkSync(__dirname + '/.migrate');
+  fs.unlinkSync(__dirname + '/' + migrateFile);
 } catch (err) {
   // ignore
 }
@@ -21,7 +23,7 @@ var db = { pets: [] };
 
 // dummy migrations
 
-migrate(__dirname + '/.migrate');
+migrate(__dirname + '/' + migrateFile);
 
 migrate('add guy ferrets', function(next){
   db.pets.push({ name: 'tobi' });
